@@ -14,8 +14,15 @@
             <div class="overlay">
               <v-container>
                 <v-row no-gutters>
-                  <v-col cols="4"  md="5" sm="10" x="12">
-                    <div class="pa-2 ma-2 info">
+                  <v-col cols="4" md="5" sm="10" x="12">
+                    <div
+                      class="pa-2 ma-2 info"
+                      data-aos="fade-right"
+                      data-aos-offset="300"
+                      data-aos-easing="ease-in-out"
+                      data-aos-duration="1000"
+                      data-aos-delay="500"
+                    >
                       <h3>Limited</h3>
                       <h3>Customise</h3>
                       <p>Discount 30% On Products</p>

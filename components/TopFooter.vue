@@ -8,7 +8,7 @@
         arrivals, <br />
         special offers and other discount information.
       </div>
-      <v-responsive class="mx-auto input-box" max-width="600">
+      <v-responsive class="mx-auto input-box" max-width="600" >
         <v-text-field
           class="email"
           hide-details="auto"

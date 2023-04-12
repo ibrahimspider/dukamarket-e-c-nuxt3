@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <NuxtPage :categories="categories" :products="products"/>
+    <NuxtPage :categories="categories" :products="products" />
   </NuxtLayout>
 </template>
 

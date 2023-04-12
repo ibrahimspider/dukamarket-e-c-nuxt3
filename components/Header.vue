@@ -4,14 +4,38 @@
       <v-row no-gutters justify="center">
         <v-col
           class="box"
-          v-for="header in headers"
-          :key="header"
           cols="12"
           md="4"
           xs="12"
+          data-aos="fade-right"
+          data-aos-easing="ease-in-out"
         >
           <figure>
-            <v-img class="col" :src="`/images/${header}.png`" cover></v-img>
+            <v-img class="col" src="/images/header-1.png" cover></v-img>
+          </figure>
+        </v-col>
+        <v-col
+          class="box"
+          cols="12"
+          md="4"
+          xs="12"
+          data-aos="fade-up"
+          data-aos-easing="ease-in-out"
+        >
+          <figure>
+            <v-img class="col" src="/images/header-2.png" cover></v-img>
+          </figure>
+        </v-col>
+        <v-col
+          class="box"
+          cols="12"
+          md="4"
+          xs="12"
+          data-aos="fade-left"
+          data-aos-easing="ease-in-out"
+        >
+          <figure>
+            <v-img class="col" src="/images/header-3.png" cover></v-img>
           </figure>
         </v-col>
       </v-row>

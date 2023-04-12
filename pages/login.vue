@@ -5,17 +5,30 @@
   <div class="login">
     <div class="box">
       <h2>Login</h2>
-      <form @submit.prevent="signin">
+      <v-alert
+        @click="closeAlert"
+        v-if="loginError"
+        class="alert"
+        density="compact"
+        type="error"
+        title="Error"
+        text="Invalid email or password. Please try again."
+      ></v-alert>
+      <v-form @submit.prevent="signin" v-model="valid">
         <v-text-field
+          class="input"
           v-model="email"
           :rules="emailRules"
           label="E-mail"
           required
         ></v-text-field>
         <v-text-field
+          class="input"
           v-model="password"
           :readonly="loading"
-          :rules="[required]"
+          :rules="[rules.required]"
+          required
+          :type="'password'"
           clearable
           label="Password"
           placeholder="Enter your password"
@@ -23,7 +36,7 @@
         <button class="btn" type="submit">Login</button>
         <p class="or"><span>or</span></p>
         <NuxtLink to="/register" class="btn"> Create New Account </NuxtLink>
-      </form>
+      </v-form>
       <p class="text">
         By providing your email address, you agree to our <br />
         Privacy Policy and Terms of Service.
@@ -36,6 +49,23 @@
 export default {
   data() {
     return {
+      loginError: false,
+      valid: false,
+      emailRules: [
+        (value) => {
+          if (value) return true;
+
+          return "E-mail is requred.";
+        },
+        (value) => {
+          if (/.+@.+\..+/.test(value)) return true;
+
+          return "E-mail must be valid.";
+        },
+      ],
+      rules: {
+        required: (value) => !!value || "Required.",
+      },
       axios: useNuxtApp().$axios,
       email: null,
       password: null,
@@ -43,6 +73,9 @@ export default {
     };
   },
   methods: {
+    closeAlert() {
+      this.loginError = false;
+    },
     async signin() {
       const body = {
         email: this.email,
@@ -51,10 +84,14 @@ export default {
       await this.axios
         .post(`${this.baseUrl}user/signIn`, body)
         .then((res) => {
-          localStorage.setItem("token", res.data.token);
-          navigateTo("/");
+          if (res.status == 200) {
+            this.loginError = false;
+            localStorage.setItem("token", res.data.token);
+            navigateTo("/");
+          }
         })
         .catch((err) => console.log("err", err));
+      this.loginError = true;
     },
   },
 };
@@ -132,6 +169,14 @@ export default {
       margin: 0;
       margin-bottom: 20px;
     }
+  }
+  .input {
+    margin-bottom: 10px;
+  }
+  .alert {
+    width: 100%;
+    margin-bottom: 20px;
+    cursor: pointer;
   }
 }
 </style>

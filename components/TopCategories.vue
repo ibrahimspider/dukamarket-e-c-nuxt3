@@ -1,7 +1,13 @@
 <template>
   <v-container class="container top-categories">
     <div class="wrap_title">
-      <h3>Top<span>Categories 2023</span></h3>
+      <h3
+        data-aos="fade-right"
+        data-aos-offset="300"
+        data-aos-easing="ease-in-out"
+      >
+        Top<span>Categories 2023</span>
+      </h3>
       <div class="products-arrivals">
         <NuxtLink to="/categories">
           View All Categories

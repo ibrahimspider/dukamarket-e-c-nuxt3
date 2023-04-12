@@ -8,6 +8,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.4",
     "nuxt": "^3.2.3",
     "nuxt-module-vuetify": "^0.0.2",
     "sass": "^1.52.1",
@@ -15,6 +16,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.1.96",
+    "aos": "^2.3.4",
     "axios": "^1.3.4",
     "nuxt-swiper": "^1.0.1",
     "sweetalert": "^2.1.2",

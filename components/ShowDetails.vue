@@ -47,7 +47,7 @@
             </p>
             <div class="cart">
               <div class="cart-input">
-                <input type="number" v-model="cart" />
+                <input type="number" v-model="quantityy" />
                 <button @click="plus" class="plus">
                   <v-icon color="green"> mdi-plus </v-icon>
                 </button>
@@ -55,7 +55,15 @@
                   <v-icon color="red"> mdi-minus </v-icon>
                 </button>
               </div>
-              <button class="add-to-cart">ADD TO CART</button>
+              <v-btn
+                :loading="loading"
+                class="add-to-cart"
+                height="48"
+                variant="tonal"
+                @click="addToCaart(product.id, quantityy)"
+              >
+                {{ cartBtn }}
+              </v-btn>
             </div>
             <div class="wish">
               <button class="wish-but">
@@ -82,22 +90,58 @@
 import { Pagination } from "swiper";
 const modules = ref([Pagination]);
 
+const axios = useNuxtApp().$axios;
 const { id } = useRoute().params;
 const { products } = defineProps(["products"]);
-const cart = ref(0);
-function plus() {
-  cart.value++;
-}
-function minus() {
-  if (cart.value === 0) {
-  } else {
-    cart.value--;
-  }
-}
+
 const product = computed(() => products.find((product) => product.id == id));
 if (!product.value) {
   throw createError({ statusCode: 404, statusMessage: "Page Not Found" });
 }
+
+//add to cart function\
+let loading = false;
+let quantityy = ref(1);
+let token = null;
+
+const baseUrl = "https://limitless-lake-55070.herokuapp.com/";
+let cartBtn = "Add To Cart";
+function plus() {
+  quantityy.value++;
+}
+
+function minus() {
+  if (quantityy.value === 0) {
+  } else {
+    quantityy.value--;
+  }
+}
+function addToCaart(productId, quantityy) {
+  if (!token) {
+    //user is not logged in
+    //show some error
+  }
+  // add to cart
+  axios
+    .post(`${baseUrl}cart/add?token=${token}`, {
+      productId,
+      quantity: quantityy,
+    })
+    .then((res) => {
+      if (res.status === 201) {
+        loading = true;
+        cartBtn = "Added To Cart";
+        setTimeout(() => (loading = false), 3000);
+      }
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
+}
+
+onMounted(() => {
+  token = localStorage.getItem("token");
+});
 </script>
 
 <style scoped lang="scss">

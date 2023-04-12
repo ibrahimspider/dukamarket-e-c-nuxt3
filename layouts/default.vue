@@ -13,7 +13,7 @@
             <NuxtLink to="/"> <img src="/images/logo.png" alt="" /></NuxtLink>
           </v-toolbar-title>
           <!-- start logout -->
-          <NuxtLink v-if="token" class="nav-icon">
+          <NuxtLink v-if="isAuthenticated" class="nav-icon">
             <v-btn
               @click="signout"
               class="nav-icon"
@@ -68,7 +68,7 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
-    user: false,
+    isAuthenticated: false,
     cartCount: 0,
     wishCount: 0,
     baseUrl: "https://limitless-lake-55070.herokuapp.com/",
@@ -98,43 +98,45 @@ export default {
     ],
   }),
   methods: {
-    async fetchData() {
-      if (this.token) {
-        await this.axios
-          .get(`${this.baseUrl}cart/?token=${this.token}`)
-          .then((res) => {
-            const result = res.data;
-            this.cartCount = result.cartItems.length;
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-        await this.axios
-          .get(`${this.baseUrl}wishlist/${this.token}`)
-          .then((res) => {
-            const result = res.data;
-            this.wishCount = result.length;
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-      }
+    fetchData() {
+      setInterval(() => {
+        if (this.token) {
+          this.isAuthenticated = true;
+          this.axios
+            .get(`${this.baseUrl}cart/?token=${this.token}`)
+            .then((res) => {
+              const result = res.data;
+              this.cartCount = result.cartItems.length;
+            })
+            .catch((err) => {
+              console.log("err", err);
+            });
+          this.axios
+            .get(`${this.baseUrl}wishlist/${this.token}`)
+            .then((res) => {
+              const result = res.data;
+              this.wishCount = result.length;
+            })
+            .catch((err) => {
+              console.log("err", err);
+            });
+        }
+      }, 3000);
     },
     signout() {
       localStorage.removeItem("token");
       this.token = null;
       this.cartCount = 0;
       this.wishCount = 0;
+      this.isAuthenticated = false;
       navigateTo("/");
     },
   },
   mounted() {
-    this.token = localStorage.getItem("token");
+    setInterval(() => {
+      this.token = localStorage.getItem("token");
+    }, 3000);
     this.fetchData();
-  },
-  beforeUpdate(){
-    this.fetchData();
-
   },
   watch: {
     group() {

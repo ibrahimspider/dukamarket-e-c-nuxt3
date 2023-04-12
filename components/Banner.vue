@@ -2,16 +2,14 @@
   <div class="banner">
     <div class="overlay">
       <div class="info">
-        <div class="content_banner">
+        <div class="content_banner" >
           <h5>Cyber Monday Sale</h5>
           <h3 class="title">50%</h3>
           <p class="text"></p>
           <h2>duka outlet 2023</h2>
           <p>Free Shipping &amp; 60-Day Free Returns</p>
           <p></p>
-          <a id="b_164068112429987859-0" class="buttons" href="" target="_blank"
-            >Shop Now</a
-          >
+          <NuxtLink to="/products">Shop Now</NuxtLink>
         </div>
       </div>
     </div>

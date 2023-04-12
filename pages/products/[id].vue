@@ -5,11 +5,7 @@
 </template>
 
 <script setup>
-const { id } = useRoute().params;
-// fetch the product
-const { data: products } = await useFetch(
-  "https://limitless-lake-55070.herokuapp.com/product/"
-);
+const { products } = defineProps(["products"]);
 </script>
 <style>
 </style>

@@ -1,20 +1,28 @@
 <template>
-  <div class="img-box">
-    <img :src="`${categorie.imageUrl}`" alt="" @error="loadDefaultImage" />
-    <div class="overlay"></div>
-  </div>
-  <h4>
-    <NuxtLink
-      v-if="categorie.categoryName === ''"
-      :to="`/categories/${categorie.id}`"
-      >{{ defaultName }}</NuxtLink
-    >
-    <NuxtLink v-else :to="`/categories/${categorie.id}`">{{
-      categorie.categoryName
-    }}</NuxtLink>
-  </h4>
-  <div class="cart-div">
-    <button class="cart">SHOW Products</button>
+  <div
+    data-aos="zoom-in"
+    data-aos-offset="300"
+    data-aos-easing="ease-in-out"
+  >
+    <div class="img-box">
+      <img :src="`${categorie.imageUrl}`" alt="" @error="loadDefaultImage" />
+      <div class="overlay"></div>
+    </div>
+    <h4>
+      <NuxtLink
+        v-if="categorie.categoryName === ''"
+        :to="`/categories/${categorie.id}`"
+        >{{ defaultName }}</NuxtLink
+      >
+      <NuxtLink v-else :to="`/categories/${categorie.id}`">{{
+        categorie.categoryName
+      }}</NuxtLink>
+    </h4>
+    <div class="cart-div">
+      <NuxtLink :to="`/categories/${categorie.id}`" class="cart"
+        >SHOW Products</NuxtLink
+      >
+    </div>
   </div>
 </template>
 
@@ -76,6 +84,8 @@ function loadDefaultImage(event) {
       }
     }
     .cart {
+      display: block;
+      text-align: center;
       transition: all 500ms ease-in-out;
       background-color: #fa5d2a;
       padding: 8px;
@@ -83,6 +93,7 @@ function loadDefaultImage(event) {
       font-weight: bold;
       width: 90%;
       opacity: 0;
+      text-decoration: none;
     }
     .cart:hover {
       background-color: #fd3f00;
